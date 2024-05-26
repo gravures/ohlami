@@ -1,0 +1,15 @@
+{
+    "pythonVersion": "3.11",
+    "stubPath": "./typings",
+    "ignore": [
+        "./typings",
+        ".venv/"
+    ],
+    "pythonPlatform": "All",
+    "typeCheckingMode": "all",
+    "reportAny": false,
+    "reportUnusedCallResult": false,
+    "reportImplicitStringConcatenation": false,
+    "reportImplicitOverride": false,
+    "reportMissingSuperCall": false
+}

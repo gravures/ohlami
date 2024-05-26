@@ -1,0 +1,76 @@
+#####################################################
+# Project Metadatas
+#####################################################
+[project]
+name = "ohlami"
+description = "Personal local AI assistant."
+authors = [{ name = "Gilles Coissac", email = "gilles@ideographe.fr" }]
+license = { text = "GPL-3.0" }
+readme = "README.md"
+keywords = []
+classifiers = [
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3 :: Only",
+  "Typing :: Typed",
+]
+requires-python = ">=3.11"
+dependencies = []
+dynamic = ["version"]
+
+[project.urls]
+homepage      = "https://github.com/gravures/ohlami"
+repository    = "https://github.com/gravures/ohlami"
+documentation = "https://github.com/gravures/ohlami"
+issues        = "https://github.com/gravures/ohlami/issues"
+
+[build-system]
+requires      = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm]
+distribution = true
+plugins      = []
+
+[tool.pdm.build]
+package-dir      = "src"
+editable-backend = "editables"
+
+[tool.pdm.version]
+source         = "scm"
+write_to       = "ohlami/_version.py"
+write_template = "__version__ = '{}'"
+
+[tool.pdm.dev-dependencies]
+dev  = [
+    "ruff",
+    "basedpyright",
+    "pre-commit",
+    "tox-pdm",
+    "dead",
+    "pretty-errors>=1.2.25",
+]
+test = ["pytest", "hypothesis", "coverage[toml]", "tox>=4.0"]
+
+[tool.pdm.scripts]
+traceback   = "_traceback.py"
+xrequire    = "pdm export -f requirements -o requirements.txt"
+test        = "pytest -s -v -k {args}"
+test_all    = "coverage run -m pytest"
+test_typing = "pdm run basedpyright --stats ./src/cookiecutterz"
+test_cover  = "coverage report"
+tox_testme  = "tox --develop -r -e py"
+pc_init     = "pre-commit install --install-hooks"
+pc_update   = "pre-commit autoupdate"
+pc_check    = { env = { "SKIP" = "basedpyright" }, cmd = "pre-commit run --all-files" }
+dead        = "dead"
+pc_clean    = "pre-commit clean && pre-commit gc"
+deps        = "pdm list --fields name,groups,version,licenses,homepage --sort groups,name,licenses --exclude :sub"
+
+[tool.pdm.scripts.pc_safety]
+composite = ["require", "pre-commit run python-safety-dependencies-check"]
